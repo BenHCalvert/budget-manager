@@ -26,6 +26,21 @@ const updateStorage = () => {
 // <tr data-id="2"><td>Oct 14, 2019 5:08 PM</td><td>November Rent</td><td>Rent/Mortgage</td><td>1300</td><td>Fill out lease renewal form!</td><td class="delete"><span>x</span></td></tr>
 // also, update total amount spent on page (based on selected category):
 
+const renderItem = items => {
+    if(!items) items = budgetItems;
+    const tbody = $('#budgetItems tbody');
+    tbody.empty();
+
+    for (const {id, date, name, category, amount, notes} of items) {
+        const row = `<tr>data-id=${id}<td>${date}</td><td>${name}</td><td>${category}</td><td>$${parseFloat(amount).toFixed(2)}</td><td>${notes}</td><td class='delete'><span>x</span></td></tr>`;  //enter html for the row here
+        tbody.append(row);
+    }
+
+    const total = items.reduce((accum, item) => {
+        return accum + parseFloat(item.amount);
+    }, 0);
+};
+
 
 
 
