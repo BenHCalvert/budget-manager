@@ -16,6 +16,11 @@ let lastID = parseInt(localStorage.getItem('lastID')) || 0;
 
 // 4th: function to update localStorage with latest budgetItems and latest lastID
 
+const updateStorage = () => {
+    localStorage.setItem('budgetItems', JSON.stringify(budgetItems));
+    localStorage.setItem('lastID', lastID)
+};
+
 
 // 5th: function to render budgetItems on table; each item should be rendered in this format:
 // <tr data-id="2"><td>Oct 14, 2019 5:08 PM</td><td>November Rent</td><td>Rent/Mortgage</td><td>1300</td><td>Fill out lease renewal form!</td><td class="delete"><span>x</span></td></tr>
@@ -58,7 +63,13 @@ $('#addItem').on('click', function (event) {
         notes: $('#notes').val().trim()
     }
 
-    console.log(newItem);
+    if (!newItem.name || !newItem.category || !newItem.amount) {
+        return alert('Must specify name, category & amount for each item.');               
+    }
+
+    budgetItems.push(newItem);
+    $('input, select').val('')
+
 
 });
 
